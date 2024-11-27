@@ -1,3 +1,4 @@
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinter import PhotoImage
@@ -8,7 +9,6 @@ class Main(tk.Tk):
         self.title("Physics Solver")
         self.geometry("1920x1080")
         self.config(bg="white")
-        self.iconbitmap('C:/Users/ced/ACP FINAL PROJ/PeriodicTableUI/src/Icon.ico')
         self.state('zoomed')
 
         # Initialize widgets
@@ -140,11 +140,14 @@ class Main(tk.Tk):
         self.deiconify()  # Show the main window again once the mechanics calculator is closed
 
     def solve_vectors(self):
-        """Function to solve vector-related problems."""
-        messagebox.showinfo("Vectors", "Vector calculations are being processed...")
+        from vectors import VectorCalculator
+        self.withdraw()  # Hide the main window
+        self.unit_converter = VectorCalculator(self)  # Pass the current root (self) to MechanicsCalculator
+        self.unit_converter.root.mainloop()  # Run the mechanics calculator loop
+        self.deiconify()  # Show the main window again once the mechanics calculator is closed
 
     def solve_electricity(self):
-        from Electricty import ElectricityCalculator
+        from Electricity import ElectricityCalculator
         self.withdraw()  # Hide the main window
         self.unit_converter = ElectricityCalculator(self)  # Pass the current root (self) to MechanicsCalculator
         self.unit_converter.root.mainloop()  # Run the mechanics calculator loop
