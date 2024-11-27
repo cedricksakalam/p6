@@ -44,26 +44,41 @@ class VectorCalculator:
         self.root = root
         self.root.title("Vector Operations")
 
-        # Full-screen window and resizable
-        self.root.geometry('1000x700')
+        # Make the window full-screen
+        self.root.state('zoomed')
+        self.root.resizable(False, False)
+
+        # Center the main frame
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
-
-        # Main frame (fills the screen)
+ 
         self.main_frame = ttk.Frame(root)
         self.main_frame.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
 
-        # Title
-        self.title_label = ttk.Label(self.main_frame, text="Vector Operations", font=("Arial", 60, "bold"))
-        self.title_label.grid(row=0, column=0, columnspan=2, pady=(10, 20), sticky="nsew")
+        # Make the grid responsive and center content
+        self.main_frame.grid_rowconfigure(0, weight=0)  # Title
+        self.main_frame.grid_rowconfigure(1, weight=0)  # Description
+        self.main_frame.grid_rowconfigure(2, weight=0)  # Operation menu (modified)
+        self.main_frame.grid_rowconfigure(3, weight=1)  # Input and output
+        self.main_frame.grid_rowconfigure(4, weight=0)  # Back button
+        self.main_frame.grid_columnconfigure(0, weight=1)  # Input frame
 
-        # Description
+        # Mechanics title label
+        self.title_label = ttk.Label(
+            self.main_frame,
+            text="Vector Operations",
+            font=("Arial", 60, "bold"),
+            anchor="center",
+        )
+        self.title_label.grid(row=0, column=0, columnspan=2, pady=(10, 20), sticky="n")
+
+        # New Mechanics description label below the title
         self.description_label = ttk.Label(
             self.main_frame,
-            text="Perform vector operations such as addition, subtraction, dot product, and more.",
-            font=("Arial", 15),
+            text="Covers the representation and manipulation of quantities that have both \nmagnitude and direction, such as force, velocity, and acceleration. It includes vector addition, subtraction, dot product, and cross product.",
+            font=("Arial", 13),
             anchor="center",
-            justify="center"
+            justify="center",
         )
         self.description_label.grid(row=1, column=0, columnspan=2, pady=(5, 10), sticky="nsew")
 
@@ -99,6 +114,7 @@ class VectorCalculator:
         # Calculate button
         self.calculate_button = ttk.Button(self.input_frame, text="Calculate", command=self.calculate)
         self.calculate_button.grid(row=8, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
+        self.calculate_button.grid_remove()  # Initially hidden
 
         # Output label
         self.output_label = ttk.Label(self.input_frame, text="Result: ", font=("Arial", 18), anchor="center")
@@ -192,7 +208,6 @@ class VectorCalculator:
             self.output_label.grid()
         except ValueError:
             messagebox.showerror("Invalid Input", "Please enter valid numerical values.")
-  
     def back(self):
         self.root.quit()
 
